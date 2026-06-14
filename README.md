@@ -5,7 +5,7 @@
 Teaching notebooks for the climate-modeling tutorials at [the 2026 paleoCAMP](https://paleoclimate.camp/) | June 15–June 29, 2026.
 [Jiang Zhu](https://staff.cgd.ucar.edu/jiangzhu/) ([jiangzhu@ucar.edu](mailto:jiangzhu@ucar.edu)) · Climate & Global Dynamics Laboratory, NSF NCAR.
 
-[![Jupyter Book](https://jupyterbook.org/badge.svg)](https://jiang-zhu.github.io/paleocamp2026/)
+[![Jupyter Book](https://img.shields.io/badge/Jupyter%20Book-online-F37626?logo=jupyter&logoColor=white)](https://jiang-zhu.github.io/paleocamp2026/)
 
 ## Getting Started
 
