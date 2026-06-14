@@ -1,0 +1,687 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>3.5 Challenge: Run an LGM simulations with the Paleoclimate-Calibrated CESM2 &#8212; Running CESM2 in Four Steps &amp; Analyzing Output</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '3.5_run_challenging_LGM';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="3.4 More Info: iCESM and iTRACE analysis" href="3.4_info_iCESM_iTRACE.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/paleoCAMPLogo.png" class="logo__image only-light" alt="Running CESM2 in Four Steps & Analyzing Output - Home"/>
+    <script>document.write(`<img src="_static/paleoCAMPLogo.png" class="logo__image only-dark" alt="Running CESM2 in Four Steps & Analyzing Output - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    An Introduction to Climate Modeling and Analysis
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="0.1_demo_unix.html">0.1 Basic Unix Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0.2_intro_python_jupyter.html">0.2 Python &amp; Jupyter Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0.3_demo_ncar_account_jupyterhub.html">0.3 Introduction to NCAR Supercomputing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1_intro_to_CESM.html">1. Introduction to CESM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_demo_run_CESM_4steps.html">2. Run CESM in four steps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.1_run_piControl_midHolocene.html">3.1 Run a pair of piControl and midHolocene simulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.2_analyze_CESM_output.html">3.2 Analyze CESM Output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.3_info_Data_Access.html">3.3 More Info: Climate and Model Data Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.4_info_iCESM_iTRACE.html">3.4 More Info: iCESM and iTRACE analysis</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">3.5 Challenge: Run an LGM simulations with the Paleoclimate-Calibrated CESM2</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jiang-zhu/paleocamp2025" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jiang-zhu/paleocamp2025/issues/new?title=Issue%20on%20page%20%2F3.5_run_challenging_LGM.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/3.5_run_challenging_LGM.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>3.5 Challenge: Run an LGM simulations with the Paleoclimate-Calibrated CESM2</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-new-case">Create new case</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#case-setup">case setup</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#case-build">case build</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submit-job">submit job</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <p><img alt="paleoCAMP logo" src="_images/paleoCAMPLogo.png" /></p>
+<section class="tex2jax_ignore mathjax_ignore" id="challenge-run-an-lgm-simulations-with-the-paleoclimate-calibrated-cesm2">
+<h1>3.5 Challenge: Run an LGM simulations with the Paleoclimate-Calibrated CESM2<a class="headerlink" href="#challenge-run-an-lgm-simulations-with-the-paleoclimate-calibrated-cesm2" title="Link to this heading">#</a></h1>
+<p><strong>Tutorials at <a class="reference external" href="https://paleoclimate.camp/">the 2025 paleoCAMP</a> | June 16–June 30, 2025</strong></p>
+<p><a class="reference external" href="https://staff.cgd.ucar.edu/jiangzhu/">Jiang Zhu</a><br />
+<a class="reference external" href="mailto:jiangzhu&#37;&#52;&#48;ucar&#46;edu">jiangzhu<span>&#64;</span>ucar<span>&#46;</span>edu</a><br />
+Climate &amp; Global Dynamics Laboratory<br />
+NSF National Center for Atmospheric Research</p>
+<hr class="docutils" />
+<p><strong>Learning Objectives:</strong></p>
+<ul class="simple">
+<li><p>Showcase how a complicated paleo simulation is done.</p></li>
+<li><p><em><strong>Still four steps(!)</strong></em>, but with more XML and namelist changes to apply the paleoclimate boundary conditions.</p></li>
+<li><p>Be aware that <em><strong>many efforts went to develop the LGM boundary conditions</strong></em>(not shown here), which may take months.</p></li>
+<li><p>Reference <a class="reference external" href="https://doi.org/10.1029/2021MS002776">CESM2-PaleoCalibr LGM simulation</a></p></li>
+</ul>
+<p><strong>Time to learn</strong>: 20 minutes</p>
+<hr class="docutils" />
+<p><strong>How to get started?</strong></p>
+<p><strong>Use terminal from your system directly</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ssh<span class="w"> </span>-XY<span class="w"> </span>YOUR_SUERNAME@derecho.hpc.ucar.edu
+</pre></div>
+</div>
+<p><strong>Type in your CIT password (the one you set up with CISL) and approve the DUO push</strong></p>
+<p><img alt="Derecho SSH" src="_images/derecho_ssh_login.png" /></p>
+<section id="create-new-case">
+<h2>Create new case<a class="headerlink" href="#create-new-case" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>A long-format compset was used to have more precise control of how I want to run each component</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/glade/campaign/cesm/development/palwg/cesm_tags/cesm2.1.5/cime/scripts
+./create_newcase<span class="w"> </span>--case<span class="w"> </span>~/b.e21.B1850.f19_g17.PaleoCalibr.21ka.02<span class="w"> </span>--res<span class="w"> </span>f19_g17<span class="w"> </span>--compset<span class="w"> </span>1850_CAM60_CLM50%SP_CICE_POP2_RTM_SGLC_SWAV<span class="w"> </span>--run-unsupported
+</pre></div>
+</div>
+</section>
+<section id="case-setup">
+<h2>case setup<a class="headerlink" href="#case-setup" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>I have FORTRAN code changes that need to be put into SourceMods/src.xxx/</p></li>
+<li><p>I specify how many CPUs to use for each component for a better computation performance</p></li>
+<li><p>Lots of <code class="docutils literal notranslate"><span class="pre">xmlchange</span></code> to take care of the different land sea distribution due to the lowered sea level at the LGM</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>~/b.e21.B1850.f19_g17.PaleoCalibr.21ka.02
+
+cp<span class="w"> </span>/glade/work/jiangzhu/data/inputdata/cesm2_21ka/gx1v7_overflow<span class="w">    </span>SourceMods/src.pop/
+cp<span class="w"> </span>/glade/work/jiangzhu/data/inputdata/cesm2_21ka/gx1v7_region_ids<span class="w">  </span>SourceMods/src.pop/
+cp<span class="w"> </span>/glade/u/home/jiangzhu/cesm/backup/nimax_limiterA/micro_mg2_0.F90<span class="w"> </span>SourceMods/src.cam/micro_mg2_0.F90
+
+./xmlchange<span class="w"> </span><span class="nv">NTASKS_CPL</span><span class="o">=</span><span class="m">1024</span>,NTHRDS_CPL<span class="o">=</span><span class="m">1</span>,ROOTPE_CPL<span class="o">=</span><span class="m">0</span>
+./xmlchange<span class="w"> </span><span class="nv">NTASKS_ATM</span><span class="o">=</span><span class="m">1024</span>,NTHRDS_ATM<span class="o">=</span><span class="m">1</span>,ROOTPE_ATM<span class="o">=</span><span class="m">0</span>
+./xmlchange<span class="w"> </span><span class="nv">NTASKS_LND</span><span class="o">=</span><span class="m">384</span>,NTHRDS_LND<span class="o">=</span><span class="m">1</span>,ROOTPE_LND<span class="o">=</span><span class="m">0</span>
+./xmlchange<span class="w"> </span><span class="nv">NTASKS_GLC</span><span class="o">=</span><span class="m">384</span>,NTHRDS_GLC<span class="o">=</span><span class="m">1</span>,ROOTPE_GLC<span class="o">=</span><span class="m">0</span>
+./xmlchange<span class="w"> </span><span class="nv">NTASKS_ROF</span><span class="o">=</span><span class="m">384</span>,NTHRDS_ROF<span class="o">=</span><span class="m">1</span>,ROOTPE_ROF<span class="o">=</span><span class="m">0</span>
+./xmlchange<span class="w"> </span><span class="nv">NTASKS_ICE</span><span class="o">=</span><span class="m">640</span>,NTHRDS_ICE<span class="o">=</span><span class="m">1</span>,ROOTPE_ICE<span class="o">=</span><span class="m">384</span>
+./xmlchange<span class="w"> </span><span class="nv">NTASKS_OCN</span><span class="o">=</span><span class="m">256</span>,NTHRDS_OCN<span class="o">=</span><span class="m">1</span>,ROOTPE_OCN<span class="o">=</span><span class="m">1024</span>
+./xmlchange<span class="w"> </span><span class="nv">NTASKS_WAV</span><span class="o">=</span><span class="m">256</span>,NTHRDS_WAV<span class="o">=</span><span class="m">1</span>,ROOTPE_WAV<span class="o">=</span><span class="m">1024</span>
+
+./xmlchange<span class="w"> </span><span class="nv">RUN_TYPE</span><span class="o">=</span>startup
+./xmlchange<span class="w"> </span><span class="nv">GET_REFCASE</span><span class="o">=</span>FALSE
+
+./xmlchange<span class="w"> </span><span class="nv">ATM_DOMAIN_PATH</span><span class="o">=</span>/glade/work/jiangzhu/data/inputdata/cesm2_21ka
+./xmlchange<span class="w"> </span><span class="nv">LND_DOMAIN_PATH</span><span class="o">=</span>/glade/work/jiangzhu/data/inputdata/cesm2_21ka
+./xmlchange<span class="w"> </span><span class="nv">OCN_DOMAIN_PATH</span><span class="o">=</span>/glade/work/jiangzhu/data/inputdata/cesm2_21ka
+./xmlchange<span class="w"> </span><span class="nv">ICE_DOMAIN_PATH</span><span class="o">=</span>/glade/work/jiangzhu/data/inputdata/cesm2_21ka
+./xmlchange<span class="w"> </span><span class="nv">ATM_DOMAIN_FILE</span><span class="o">=</span>domain.lnd.fv19_gx1v7_21ka.200623.nc
+./xmlchange<span class="w"> </span><span class="nv">LND_DOMAIN_FILE</span><span class="o">=</span>domain.lnd.fv19_gx1v7_21ka.200623.nc
+./xmlchange<span class="w"> </span><span class="nv">OCN_DOMAIN_FILE</span><span class="o">=</span>domain.ocn.fv19_gx1v7_21ka.200623.nc
+./xmlchange<span class="w"> </span><span class="nv">ICE_DOMAIN_FILE</span><span class="o">=</span>domain.ocn.fv19_gx1v7_21ka.200623.nc
+
+./xmlchange<span class="w"> </span><span class="nv">ATM2OCN_FMAPNAME</span><span class="o">=</span>/glade/work/jiangzhu/data/inputdata/cesm2_21ka/map_fv19_TO_gx1v7_21ka_aave.200623.nc
+./xmlchange<span class="w"> </span><span class="nv">ATM2OCN_SMAPNAME</span><span class="o">=</span>/glade/work/jiangzhu/data/inputdata/cesm2_21ka/map_fv19_TO_gx1v7_21ka_blin.200623.nc
+./xmlchange<span class="w"> </span><span class="nv">ATM2OCN_VMAPNAME</span><span class="o">=</span>/glade/work/jiangzhu/data/inputdata/cesm2_21ka/map_fv19_TO_gx1v7_21ka_patc.200623.nc
+./xmlchange<span class="w"> </span><span class="nv">OCN2ATM_FMAPNAME</span><span class="o">=</span>/glade/work/jiangzhu/data/inputdata/cesm2_21ka/map_gx1v7_21ka_TO_fv19_aave.200623.nc
+./xmlchange<span class="w"> </span><span class="nv">OCN2ATM_SMAPNAME</span><span class="o">=</span>/glade/work/jiangzhu/data/inputdata/cesm2_21ka/map_gx1v7_21ka_TO_fv19_aave.200623.nc
+./xmlchange<span class="w"> </span><span class="nv">ROF2OCN_FMAPNAME</span><span class="o">=</span>/glade/work/jiangzhu/data/inputdata/cesm2_21ka/map_r05_nomask_TO_gx1v7_21ka_aave.200623.nc
+./xmlchange<span class="w"> </span><span class="nv">ROF2OCN_LIQ_RMAPNAME</span><span class="o">=</span>/glade/work/jiangzhu/data/inputdata/cesm2_21ka/map_r05_TO_gx1v7_21ka_merged_200623.nc
+./xmlchange<span class="w"> </span><span class="nv">ROF2OCN_ICE_RMAPNAME</span><span class="o">=</span>/glade/work/jiangzhu/data/inputdata/cesm2_21ka/map_r05_TO_gx1v7_21ka_nnsm_200623.nc
+
+./case.setup
+</pre></div>
+</div>
+</section>
+<section id="case-build">
+<h2>case build<a class="headerlink" href="#case-build" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>I usually set up namelist changes before running <code class="docutils literal notranslate"><span class="pre">case.build</span></code></p></li>
+<li><p>user_nl_cpl: orbital change</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">orb_iyear</span><span class="w">   </span><span class="o">=</span><span class="w"> </span>-19050
+<span class="nv">orb_mode</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;fixed_year&#39;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>user_nl_cam: GHG, topography with added ice sheets, and model cloud parameter tuning</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">bnd_topo</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;/glade/work/jiangzhu/data/inputdata/cesm2_21ka/bnd_topo_fv_1.9x2.5_LGM_c200629_nc3000_Nsw084_Nrs016_Co120_Fi001.replaced.nc&#39;</span>
+<span class="nv">scenario_ghg</span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;FIXED&#39;</span>
+<span class="nv">co2vmr</span><span class="w">      </span><span class="o">=</span><span class="w"> </span>190e-6
+<span class="nv">ch4vmr</span><span class="w">      </span><span class="o">=</span><span class="w"> </span>375e-9
+<span class="nv">n2ovmr</span><span class="w">      </span><span class="o">=</span><span class="w"> </span>200e-9
+<span class="nv">f11vmr</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.0
+<span class="nv">f12vmr</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.0
+
+<span class="nv">micro_mg_num_steps</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="m">8</span>
+<span class="nv">dust_emis_fact</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.55D0
+<span class="nv">clubb_gamma_coef</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.275D0
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>user_nl_pop changes: ocean bathymetry, land-sea mask, and initial condition</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">topography_file</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;/glade/work/jiangzhu/data/inputdata/cesm2_21ka/topography_21ka_200623.ieeei4&#39;</span>
+<span class="nv">region_mask_file</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;/glade/work/jiangzhu/data/inputdata/cesm2_21ka/region_mask_21ka_200623.ieeei4&#39;</span>
+<span class="nv">ebm_param_option</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;internal&#39;</span>
+
+<span class="nv">init_ts_file</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;/glade/work/jiangzhu/data/inputdata/cesm2_21ka/b.e12.B1850C5.f19_g16.i21ka.03.pop.h.0801-0900.climo.ncra.nc&#39;</span>
+<span class="nv">init_ts_file_fmt</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;nc&#39;</span>
+<span class="nv">init_ts_option</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;file&#39;</span>
+<span class="nv">init_iage_init_file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;/glade/work/jiangzhu/data/inputdata/cesm2_21ka/b.e12.B1850C5.f19_g16.i21ka.03.pop.h.0801-0900.climo.ncra.nc&#39;</span>
+<span class="nv">init_iage_init_file_fmt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;nc&#39;</span>
+<span class="nv">init_iage_option</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;file&#39;</span>
+<span class="nv">overflows_restfile</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;b.e21.B1850.f19_g17.PaleoCalibr.21ka.02.pop.ro&#39;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>user_nl_clm: land surface data change to reflect the LGM ice sheets, and remove anthropogenic processes</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">fsurdat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;/glade/work/jiangzhu/data/inputdata/cesm2_21ka/surfdata_fv19_hist_16pfts_nourb_CMIP6_21ka.c200624.nc&#39;</span>
+<span class="nv">finidat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;/glade/work/jiangzhu/data/restart/i.e21.I1850C5.f19_g17.21ka.01/i.e21.I1850C5.f19_g17.21ka.01.clm2.r.1401-01-01-00000.nc&#39;</span>
+
+<span class="nv">urban_hac</span><span class="o">=</span><span class="s1">&#39;OFF&#39;</span>
+<span class="nv">calc_human_stress_indices</span><span class="o">=</span><span class="s1">&#39;NONE&#39;</span>
+<span class="nv">do_harvest</span><span class="o">=</span>.false.
+<span class="nv">stream_year_first_urbantv</span><span class="o">=</span><span class="m">1850</span>
+<span class="nv">stream_year_last_urbantv</span><span class="o">=</span><span class="m">1850</span>
+<span class="nv">irrigate</span><span class="o">=</span>.false.
+<span class="nv">popdensmapalgo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;nn&#39;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>user_nl_rtm: initial condition for river is being set here</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">finidat_rtm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;/glade/work/jiangzhu/data/restart/b.e12.B1850C5.f19_g16.i21ka.03/0901-01-01/b.e12.B1850C5.f19_g16.i21ka.03.rtm.r.0901-01-01-00000.nc&#39;</span>
+<span class="nv">rtm_effvel</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;NULL&#39;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>user_nl_cice: bathymetry for the sea ice model, as well as the initial condition</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">kmt_file</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;/glade/work/jiangzhu/data/inputdata/cesm2_21ka/topography_21ka_200623.ieeei4&#39;</span>
+<span class="nv">ice_ic</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;default&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./case.build
+</pre></div>
+</div>
+</section>
+<section id="submit-job">
+<h2>submit job<a class="headerlink" href="#submit-job" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>The model runs 46 years per wallclock day, so STOP_N=20 works well (20 years can be finished within the limit of JOB_WALLCLOCK_TIME of 12 hours)</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./xmlchange<span class="w"> </span><span class="nv">STOP_OPTION</span><span class="o">=</span>nyears,REST_OPTION<span class="o">=</span>nyears
+./xmlchange<span class="w"> </span><span class="nv">STOP_N</span><span class="o">=</span><span class="m">20</span>,REST_N<span class="o">=</span><span class="m">10</span>
+./xmlchange<span class="w"> </span><span class="nv">RESUBMIT</span><span class="o">=</span><span class="m">4</span>
+./xmlchange<span class="w"> </span><span class="nv">JOB_WALLCLOCK_TIME</span><span class="o">=</span><span class="m">12</span>:00:00
+./case.submit
+</pre></div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "npl-2024a"
+        },
+        kernelOptions: {
+            name: "npl-2024a",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'npl-2024a'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="3.4_info_iCESM_iTRACE.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">3.4 More Info: iCESM and iTRACE analysis</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-new-case">Create new case</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#case-setup">case setup</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#case-build">case build</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submit-job">submit job</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Jiang Zhu
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
