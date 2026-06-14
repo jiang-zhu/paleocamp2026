@@ -1,0 +1,23 @@
+format: jb-book
+root: intro
+parts:
+  - caption: Prerequisites
+    numbered: false
+    chapters:
+      - file: 0.1_demo_unix
+      - file: 0.2_intro_jupyter
+      - file: 0.3_demo_ncar_account_jupyterhub
+  - caption: Main Learning Modules
+    numbered: false
+    chapters:
+      - file: 1_intro_to_CESM
+      - file: 2_demo_run_CESM_4steps
+      - file: 3_analyze_CESM_output
+      - file: 4a_opt1_run_piControl_midHolocene
+      - file: 4b_opt2_analyze_long_midHolocene
+  - caption: Info and Advanced Modules
+    numbered: false
+    chapters:
+      - file: 5_info_Data_Access
+      - file: 6_info_iCESM_iTRACE
+      - file: 7_run_challenging_LGM

@@ -1,0 +1,42 @@
+# Book settings — Jupyter Book (https://jupyterbook.org)
+
+title: An Introduction to Climate Modeling and Analysis
+author: Jiang Zhu
+logo: images/paleoCAMPLogo.png
+copyright: "© 2026 Jiang Zhu"
+
+# Do NOT re-execute notebooks at build time — publish the outputs already
+# saved in the .ipynb files. These notebooks read data from GLADE and run on
+# NCAR JupyterHub, so they can't be re-run in a generic build/CI environment.
+# See https://jupyterbook.org/content/execute.html
+execute:
+  execute_notebooks: "off"
+
+# MyST Markdown extensions
+parse:
+  myst_enable_extensions:
+    - colon_fence
+    - deflist
+    - html_admonition
+    - html_image
+    # - attrs_image   # enable only if your myst-parser version still provides it
+    #                   (renamed to attrs_inline / attrs_block in newer versions)
+
+# Files / patterns to skip when building the book
+exclude_patterns: [README.md, "**.ipynb_checkpoints", _build, .DS_Store]
+
+# LaTeX output file name for PDF builds
+latex:
+  latex_documents:
+    targetname: book.tex
+
+# Where the book lives on the web (controls the GitHub buttons and links)
+repository:
+  url: https://github.com/jiang-zhu/paleocamp2026
+  path_to_book: .      # book is at the repo root; change to "docs" if you nest it
+  branch: main         # set to your repo's default branch (main or master)
+
+# GitHub buttons in the top bar
+html:
+  use_issues_button: true
+  use_repository_button: true
