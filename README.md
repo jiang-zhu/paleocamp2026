@@ -11,7 +11,7 @@ Teaching notebooks for the climate-modeling tutorials at [the 2026 paleoCAMP](ht
 
 Everything runs on NCAR [JupyterHub](https://jupyterhub.hpc.ucar.edu/) — no local setup needed.
 
-1. Sign in to JupyterHub and start a Casper server (project `UAZN0042`).
+1. Sign in to JupyterHub and start a Casper server (project `UAZN0052`).
 2. Open a terminal and clone the repo:
    ```bash
    git clone https://github.com/jiang-zhu/paleocamp2026.git
